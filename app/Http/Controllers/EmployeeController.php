@@ -36,4 +36,30 @@ class EmployeeController extends Controller
                 'status'=>'Fail (missing field / unexpected value)'
             ], 400);
     }
+
+    public function register (Request $req) 
+    {
+        $username = $req->username;
+        $password = $req->password;
+
+        try {
+            $employee = Employee::create([
+                            'Email' => $username,
+                            'Password' => md5($password)
+                        ]);
+
+            if ($employee)
+                return response()->json([
+                    'status'=>'Success'
+                ], 200);
+            else
+                return response()->json([
+                    'status'=>'Fail (missing field / unexpected value)'
+                ], 400);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status'=>'Fail (missing field / unexpected value)'
+            ], 400);
+        }
+    }
 }

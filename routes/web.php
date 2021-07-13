@@ -18,3 +18,4 @@ $router->get('/', function () use ($router) {
 });
 
 $router->post('/login', 'EmployeeController@login');
+$router->post('/register', 'EmployeeController@register');

@@ -12,4 +12,5 @@ class Employee extends Model
         'Password', 'Handphone', 
         'Position'
     ];
+    public $timestamps = false;
 }
