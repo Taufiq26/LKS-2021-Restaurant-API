@@ -8,7 +8,7 @@ class Employee extends Model
 {
     protected $table = 'MsEmployee';
     protected $fillable = [
-        'Id', 'Name', 'Email', 
+        'Name', 'Email', 
         'Password', 'Handphone', 
         'Position'
     ];
