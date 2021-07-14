@@ -30,4 +30,8 @@ $router->get('/', function () use ($router) {
 $router->group(['middleware' => 'CorsMiddleware'], function($router){
     $router->post('/login', 'EmployeeController@login');
     $router->post('/register', 'EmployeeController@register');
+
+    $router->group(['middleware' => 'CustomAuth'], function($router){
+        $router->get('/menu', 'MenuController@getMenu');
+    });
 });
