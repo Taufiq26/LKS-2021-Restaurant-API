@@ -104,7 +104,7 @@ class CorsMiddleware
      */
     public function handle($request, Closure $next) {
         if ($request->isMethod('OPTIONS')) {
-            $response = new Response("", 200);
+            $response = new Response("CORS OK!", 200);
         }
         else {
             $response = $next($request);

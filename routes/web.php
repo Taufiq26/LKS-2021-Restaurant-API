@@ -28,6 +28,6 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['middleware' => 'CorsMiddleware'], function($router){
-    $router->post('/login', 'EmployeeController@login');
-    $router->post('/register', 'EmployeeController@register');
+    $app->post('/login', 'EmployeeController@login');
+    $app->post('/register', 'EmployeeController@register');
 });
