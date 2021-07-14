@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.38)
 # Database: lks_restaurant
-# Generation Time: 2021-07-13 14:00:19 +0000
+# Generation Time: 2021-07-14 06:27:14 +0000
 # ************************************************************
 
 
@@ -20,13 +20,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
+# Dump of table AccessToken
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `AccessToken`;
+
+CREATE TABLE `AccessToken` (
+  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `EmployeeId` int(11) DEFAULT NULL,
+  `Token` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `AccessToken` WRITE;
+/*!40000 ALTER TABLE `AccessToken` DISABLE KEYS */;
+
+INSERT INTO `AccessToken` (`Id`, `EmployeeId`, `Token`)
+VALUES
+	(1,2,'cc3a0f4e-8697-4395-a7e6-4aa9346a2839');
+
+/*!40000 ALTER TABLE `AccessToken` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 # Dump of table MsEmployee
 # ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `MsEmployee`;
 
 CREATE TABLE `MsEmployee` (
-  `Id` char(6) NOT NULL DEFAULT '',
+  `Id` int(6) NOT NULL AUTO_INCREMENT,
   `Name` varchar(100) DEFAULT NULL,
   `Email` varchar(50) DEFAULT NULL,
   `Password` char(128) DEFAULT NULL,
@@ -35,6 +58,16 @@ CREATE TABLE `MsEmployee` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `MsEmployee` WRITE;
+/*!40000 ALTER TABLE `MsEmployee` DISABLE KEYS */;
+
+INSERT INTO `MsEmployee` (`Id`, `Name`, `Email`, `Password`, `Handphone`, `Position`)
+VALUES
+	(1,'Taufiq','taufiq26.ridwan@gmail.com','21232f297a57a5a743894a0e4a801fc3','0896969696969','Supervisor'),
+	(2,NULL,'gwetaufiq@gmail.com','21232f297a57a5a743894a0e4a801fc3',NULL,NULL);
+
+/*!40000 ALTER TABLE `MsEmployee` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table MsMenu
@@ -45,6 +78,7 @@ DROP TABLE IF EXISTS `MsMenu`;
 CREATE TABLE `MsMenu` (
   `Id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `Name` varchar(50) DEFAULT NULL,
+  `Description` varchar(255) DEFAULT NULL,
   `Price` int(11) DEFAULT NULL,
   `Photo` varchar(100) DEFAULT NULL,
   `Carbo` int(11) DEFAULT NULL,
@@ -55,12 +89,12 @@ CREATE TABLE `MsMenu` (
 LOCK TABLES `MsMenu` WRITE;
 /*!40000 ALTER TABLE `MsMenu` DISABLE KEYS */;
 
-INSERT INTO `MsMenu` (`Id`, `Name`, `Price`, `Photo`, `Carbo`, `Protein`)
+INSERT INTO `MsMenu` (`Id`, `Name`, `Description`, `Price`, `Photo`, `Carbo`, `Protein`)
 VALUES
-	(1,'Baso',10000,NULL,NULL,NULL),
-	(2,'Mie Ayam',8000,NULL,NULL,NULL),
-	(3,'Es Teh Manis',3000,NULL,NULL,NULL),
-	(4,'Jus Alpukat',8000,NULL,NULL,NULL);
+	(1,'Baso','Baso bulat seperti bola pingpong',10000,NULL,NULL,NULL),
+	(2,'Mie Ayam','Mie Ayam yang udah mati ayamnya',8000,NULL,NULL,NULL),
+	(3,'Es Teh Manis','Es teh manis yg buat juga teteh yang manis',3000,NULL,NULL,NULL),
+	(4,'Jus Alpukat','Jus alpukat pekat kat kat',8000,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `MsMenu` ENABLE KEYS */;
 UNLOCK TABLES;
