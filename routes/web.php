@@ -17,5 +17,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->post('/login', 'EmployeeController@login');
-$router->post('/register', 'EmployeeController@register');
+Route::group(['middleware' => 'CorsMiddleware'], function($router){
+    $router->post('/login', 'EmployeeController@login');
+    $router->post('/register', 'EmployeeController@register');
+});
