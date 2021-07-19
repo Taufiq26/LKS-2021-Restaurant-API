@@ -51,4 +51,25 @@ class MenuController extends Controller
             ], 400);
         }
     }
+
+    public function updateMenu (Request $req, $id) 
+    {
+        try {
+            $menu = Menu::find($id);
+            $menu->update([
+                'Name' => $req->name,
+                'Description' => $req->description,
+                'Price' => $req->price
+            ]);
+    
+            return response()->json([
+                'status' => 'Success'
+            ], 200);
+        } catch (\Throwable $th) {
+    
+            return response()->json([
+                'status' => 'Fail (missing field / unexpected value)'
+            ], 400);
+        }
+    }
 }
