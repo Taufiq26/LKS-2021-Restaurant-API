@@ -33,5 +33,6 @@ $router->group(['middleware' => 'CorsMiddleware'], function($router){
 
     $router->group(['middleware' => 'CustomAuth'], function($router){
         $router->get('/menu', 'MenuController@getMenu');
+        $router->post('/menu', 'MenuController@storeMenu');
     });
 });
