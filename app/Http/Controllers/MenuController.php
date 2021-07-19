@@ -72,4 +72,21 @@ class MenuController extends Controller
             ], 400);
         }
     }
+
+    public function deleteMenu (Request $req, $id) 
+    {
+        try {
+            $menu = Menu::find($id);
+            $menu->delete();
+    
+            return response()->json([
+                'status' => 'Success'
+            ], 200);
+        } catch (\Throwable $th) {
+    
+            return response()->json([
+                'status' => 'Fail (missing field / unexpected value)'
+            ], 400);
+        }
+    }
 }
