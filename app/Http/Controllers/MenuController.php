@@ -85,7 +85,7 @@ class MenuController extends Controller
             dd($th);
             return response()->json([
                 'status' => 'Fail (missing field / unexpected value)',
-                'message' => $th->getMessage()
+                // 'message' => $th->getMessage()
             ], 400);
         }
     }
@@ -126,7 +126,7 @@ class MenuController extends Controller
     
             return response()->json([
                 'status' => 'Fail (missing field / unexpected value)',
-                'message' => $th->getMessage()
+                // 'message' => $th->getMessage()
             ], 400);
         }
     }
@@ -136,7 +136,7 @@ class MenuController extends Controller
         try {
             $menu = Menu::where('Id', $id)->where('UserId', $req->auth->sub)->first();
             
-            if ($menu->Photo) {
+            if ($menu && $menu->Photo) {
                 // Extract the filename from the full URL
                 $photoPath = parse_url($menu->Photo, PHP_URL_PATH);
                 $filename = basename($photoPath);
