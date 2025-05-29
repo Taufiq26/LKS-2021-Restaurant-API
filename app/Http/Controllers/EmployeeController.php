@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Employee;
 use App\Models\AccessToken;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class EmployeeController extends Controller
 {
@@ -19,26 +21,17 @@ class EmployeeController extends Controller
         //
     }
 
-    function gen_uuid() {
-        return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-            // 32 bits for "time_low"
-            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
-    
-            // 16 bits for "time_mid"
-            mt_rand( 0, 0xffff ),
-    
-            // 16 bits for "time_hi_and_version",
-            // four most significant bits holds version number 4
-            mt_rand( 0, 0x0fff ) | 0x4000,
-    
-            // 16 bits, 8 bits for "clk_seq_hi_res",
-            // 8 bits for "clk_seq_low",
-            // two most significant bits holds zero and one for variant DCE1.1
-            mt_rand( 0, 0x3fff ) | 0x8000,
-    
-            // 48 bits for "node"
-            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
-        );
+    private function generateJWT($employee) {
+        $key = env('JWT_SECRET', 'your-default-secret-key');
+        $payload = [
+            'iss' => 'lks-restaurant',
+            'sub' => $employee->Id,
+            'email' => $employee->Email,
+            'iat' => time(),
+            'exp' => time() + (60*60*24) // Token valid for 24 hours
+        ];
+
+        return JWT::encode($payload, $key, 'HS256');
     }
 
     public function login (Request $req) 
@@ -50,15 +43,18 @@ class EmployeeController extends Controller
                         ->where('Password', md5($password))
                         ->first();
 
-        $token = AccessToken::create([
-                    'EmployeeId' => $employee->Id,
-                    'Token' => $this->gen_uuid()
-                ]);
+        $token = $this->generateJWT($employee);
+        AccessToken::create([
+            'EmployeeId' => $employee->Id,
+            'Token' => $token
+        ]);
 
         if ($employee && $token)
             return response()->json([
                 'status' => 'Success',
-                'access_token' => $token->Token
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+                'expires_in' => time() + (60*60*24) // 1 hour in seconds
             ], 200);
         else
             return response()->json([
