@@ -8,10 +8,12 @@ class Menu extends Model
 {
     protected $table = 'MsMenu';
     protected $primaryKey = "Id";
+    public $incrementing = false;
     protected $fillable = [
-        'Name', 'Description', 
+        'Id', 'Name', 'Description', 
         'Price', 'Photo', 
-        'Carbo', 'Protein'
+        'Carbo', 'Protein',
+        'UserId'
     ];
     public $timestamps = false;
 }

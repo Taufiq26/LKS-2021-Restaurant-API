@@ -54,7 +54,7 @@ class EmployeeController extends Controller
                 'status' => 'Success',
                 'access_token' => $token,
                 'token_type' => 'Bearer',
-                'expires_in' => time() + (60*60*24) // 1 hour in seconds
+                'expires_in' => time() + (60*60*24) // 24 hour in seconds
             ], 200);
         else
             return response()->json([
